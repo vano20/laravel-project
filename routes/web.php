@@ -11,7 +11,14 @@
 |
 */
 
-Route::get('/', 'PagesController@home');
+use App\Repositories\UserRepository;
+
+Route::get('/', function(UserRepository $users)
+{
+  dd($users);
+});
+
+// Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
@@ -30,6 +37,10 @@ Route::get('/contact', 'PagesController@contact');
 */
 
 Route::resource('projects','ProjectController');
+
+Route::post('/projects/{project}/tasks', 'ProjectTasksController@store');
+Route::post('/completed-tasks/{task}', 'CompletedTasksController@store');
+Route::delete('/completed-tasks/{task}', 'CompletedTasksController@destroy');
 
 // Route::get('/projects', 'ProjectController@index');
 // Route::get('/projects/create', 'ProjectController@create');
